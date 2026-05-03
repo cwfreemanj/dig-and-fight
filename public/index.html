@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+<title>Dig & Fight: Co-op</title>
+<style>
+:root{--bg:#06070c;--panel:#121725;--panel2:#1c2334;--text:#f4f7ff;--muted:#9aa7c5;--gold:#ffd45e;--cyan:#72e9ff;--green:#72ff7f;--red:#ff5364}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03040a;color:var(--text);font-family:system-ui,Segoe UI,Arial,sans-serif;overscroll-behavior:none}canvas{position:fixed;inset:0;width:100vw;height:100vh;background:radial-gradient(circle at center,#101522,#03040a 70%);display:block;image-rendering:pixelated;touch-action:none;cursor:crosshair}.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.76);z-index:20}.card{width:min(900px,94vw);max-height:92dvh;overflow:auto;background:linear-gradient(180deg,#171d2d,#0d111b);border:3px solid #394867;border-radius:18px;box-shadow:0 0 50px #000;padding:22px}h1{font-size:clamp(30px,6vw,54px);line-height:.95;margin:0 0 8px;color:var(--gold);text-shadow:0 4px #000}h2{margin:14px 0 10px;color:var(--cyan)}p{color:var(--muted);line-height:1.45}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.classCard{background:#0b101b;border:2px solid #313d5b;border-radius:14px;padding:10px;cursor:pointer;min-height:120px}.classCard:hover{filter:brightness(1.15)}.classCard.active{border-color:var(--gold);box-shadow:0 0 20px rgba(255,212,94,.23)}.classCard .emoji{font-size:26px}.classCard b{display:block;color:#fff}.classCard span{font-size:11px;color:var(--muted);display:block;margin-top:4px;line-height:1.25}button,input{font:inherit}input{background:#0b1020;border:2px solid #3c4e76;color:#fff;border-radius:12px;padding:10px 12px;outline:none}button{background:linear-gradient(180deg,#39415d,#20283e);border:2px solid #657194;border-radius:12px;color:#fff;font-weight:900;padding:10px 14px;cursor:pointer;box-shadow:0 4px 0 #05070d;text-transform:uppercase;letter-spacing:.35px}button:active{transform:translateY(2px);box-shadow:0 2px 0 #05070d}.primary{background:linear-gradient(180deg,#1fb355,#10692f);border-color:#79ff91}.gold{background:linear-gradient(180deg,#b8871f,#6b4310);border-color:var(--gold);color:#fff8c6}.danger{background:linear-gradient(180deg,#a83b45,#5c1d25);border-color:#ff7f8f}.small{font-size:13px;color:var(--muted)}#hud{position:fixed;left:10px;top:10px;right:10px;z-index:8;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}.pill{background:rgba(9,13,24,.84);border:1px solid #31405e;border-radius:999px;padding:4px 8px;font-size:12px;box-shadow:0 2px 12px #000}.pill b{color:#fff}#notice{position:fixed;left:50%;top:48px;transform:translateX(-50%);z-index:15;background:rgba(10,15,26,.92);border:2px solid #465a83;border-radius:12px;padding:9px 14px;display:none;box-shadow:0 0 24px #000;color:#fff;text-align:center}.upgrade{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;background:#0b101b;border:1px solid #303d5c;border-radius:12px;margin:8px 0;padding:10px}.upgrade b{color:#fff}.upgrade small{color:var(--muted)}#touch{position:fixed;inset:0;display:none;z-index:10;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}.touchPad{position:absolute;left:22px;bottom:24px;width:160px;height:160px;pointer-events:auto}.tbtn{position:absolute;width:54px;height:54px;border-radius:16px;background:rgba(42,51,75,.72);border:2px solid rgba(173,190,226,.56);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;user-select:none;touch-action:none;backdrop-filter:blur(4px)}.tbtn.active{background:rgba(114,233,255,.82);transform:scale(.96)}#tu{left:53px;top:0}#td{left:53px;bottom:0}#tl{left:0;top:53px}#tr{right:0;top:53px}.actionPad{position:absolute;right:22px;bottom:28px;width:220px;height:154px;pointer-events:auto}.act{width:72px;height:72px;border-radius:50%;font-size:22px}.act.mine{left:0;bottom:0;background:rgba(56,125,64,.82);border-color:rgba(151,255,163,.8)}.act.attack{right:0;top:0;background:rgba(166,125,38,.88);border-color:rgba(255,225,109,.86)}.act.special{right:72px;bottom:6px;background:rgba(84,52,154,.84);border-color:rgba(210,170,255,.86)}.spellPad{position:absolute;right:24px;bottom:182px;display:flex;gap:7px;pointer-events:auto}.spell{position:static;width:44px;height:44px;border-radius:14px;font-size:20px}.spell.active{background:rgba(114,233,255,.82);border-color:#fff}@media(hover:none),(pointer:coarse),(max-width:800px){#touch{display:block}.grid{grid-template-columns:1fr 1fr}.card{padding:16px}.upgrade{grid-template-columns:1fr auto}.upgrade button{grid-column:1/-1}}@media(max-height:520px){.card{font-size:13px;padding:12px}.touchPad,.actionPad,.spellPad{opacity:.82;transform:scale(.88);transform-origin:bottom}.actionPad{transform-origin:bottom right}.touchPad{transform-origin:bottom left}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud"></div><div id="notice"></div>
+
+<div id="title" class="overlay">
+  <div class="card">
+    <h1>⛏️ DIG & FIGHT: CO-OP</h1>
+    <p>Survive the shared mine together. Dig downward, fight baddies, open chests, and reach the bottom before the crush ceiling catches the team.</p>
+    <div class="row"><input id="nameInput" maxlength="16" placeholder="Your digger name" value="Digger"/><button id="joinBtn" class="primary">Join Co-op Mine</button></div>
+    <h2>Choose Class</h2>
+    <div id="classGrid" class="grid"></div>
+    <p class="small"><b>Desktop:</b> WASD/Arrows move · Mouse aims · Hold mouse mines · Space attacks/casts · F/Shift special · Q/1/2/3 mage spells.<br><b>Mobile:</b> D-pad + mine/attack/special buttons.</p>
+  </div>
+</div>
+
+<div id="shop" class="overlay" style="display:none">
+  <div class="card">
+    <h1>🛒 Co-op Shop</h1>
+    <p id="shopText">Spend coins, upgrade equipment, then descend together.</p>
+    <div id="upgradeList"></div>
+    <div class="row" style="margin-top:14px"><button id="nextBtn" class="primary">Start Next Level Now</button><button id="reviveBtn" class="gold">Revive</button></div>
+    <p class="small">The server auto-starts the next level when the shop timer ends. Later we can persist these upgrades to Wix or another DB.</p>
+  </div>
+</div>
+
+<div id="downed" class="overlay" style="display:none;pointer-events:none">
+  <div class="card" style="pointer-events:auto;max-width:560px;text-align:center">
+    <h1>☠️ Downed</h1>
+    <p id="downedText">You were knocked down.</p>
+    <div class="row" style="justify-content:center"><button id="reviveBtn2" class="primary">Revive</button></div>
+  </div>
+</div>
+
+<div id="touch">
+  <div class="touchPad"><div class="tbtn" id="tu">▲</div><div class="tbtn" id="td">▼</div><div class="tbtn" id="tl">◀</div><div class="tbtn" id="tr">▶</div></div>
+  <div class="spellPad"><div class="tbtn spell" id="sf">🔥</div><div class="tbtn spell" id="si">❄️</div><div class="tbtn spell" id="st">☣️</div></div>
+  <div class="actionPad"><div class="tbtn act mine" id="tm">⛏</div><div class="tbtn act special" id="tsx">✨</div><div class="tbtn act attack" id="ta">⚔</div></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+(() => {
+'use strict';
+const socket = io();
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+const UI = {
+  hud: document.getElementById('hud'), notice: document.getElementById('notice'), title: document.getElementById('title'), shop: document.getElementById('shop'), downed: document.getElementById('downed'),
+  classGrid: document.getElementById('classGrid'), nameInput: document.getElementById('nameInput'), joinBtn: document.getElementById('joinBtn'), upgradeList: document.getElementById('upgradeList'), shopText: document.getElementById('shopText'),
+  nextBtn: document.getElementById('nextBtn'), reviveBtn: document.getElementById('reviveBtn'), reviveBtn2: document.getElementById('reviveBtn2'), downedText: document.getElementById('downedText'),
+  sf: document.getElementById('sf'), si: document.getElementById('si'), st: document.getElementById('st')
+};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const dist=(a,b,c,d)=>Math.hypot(a-c,b-d);
+let W=innerWidth,H=innerHeight,dpr=1;
+let localId=null, joined=false, selectedClass='warrior', selectedSpell='fireball';
+let classes={}, upgrades={}, tileDefs={}, enemyDefs={}, chestDefs={};
+let map={cols:18,rows:80,tileSize:32,tiles:[]};
+let snap={state:'playing',players:[],enemies:[],chests:[],projectiles:[],drops:[],pressureY:0,level:1,shopEndsAt:0};
+let camera={x:0,y:0};
+let effects=[];
+let mouse={x:0,y:0,worldX:0,worldY:0,down:false,right:false};
+const keys=new Set();
+const touch={left:false,right:false,up:false,down:false,mine:false,attack:false,special:false};
+
+function resize(){dpr=Math.min(devicePixelRatio||1,2.25);W=innerWidth;H=innerHeight;canvas.width=Math.floor(W*dpr);canvas.height=Math.floor(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false;}
+addEventListener('resize',resize);resize();
+function toast(text){UI.notice.textContent=text;UI.notice.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>UI.notice.style.display='none',3200);}
+function localPlayer(){return snap.players.find(p=>p.id===localId)||null;}
+function tileAt(tx,ty){if(tx<0||ty<0||tx>=map.cols||ty>=map.rows)return {type:'bedrock',hp:999999};return map.tiles[ty*map.cols+tx]||{type:'empty',hp:0};}
+function screenToWorld(x,y){return {x:x+camera.x,y:y+camera.y};}
+function updateAimFromMouse(){const w=screenToWorld(mouse.x,mouse.y);mouse.worldX=w.x;mouse.worldY=w.y;}
+
+function buildClassGrid(){UI.classGrid.innerHTML='';for(const [key,c] of Object.entries(classes)){const div=document.createElement('div');div.className='classCard'+(key===selectedClass?' active':'');div.innerHTML=`<div class="emoji">${c.emoji||'⭐'}</div><b>${c.name}</b><span>${classDescription(key)}</span>`;div.onclick=()=>{selectedClass=key;buildClassGrid();updateSpellButtons();};UI.classGrid.appendChild(div);}}
+function classDescription(key){return ({mage:'Projectiles, explosions, healing regen.',bandit:'Fast attacks, faster movement, XP/gold boost.',warrior:'Balanced stats, super slash radius attack.',tank:'High HP/defense, invulnerability special.',miner:'Mining boost, rapid mining focus.'}[key]||'Co-op adventurer.');}
+function upgradeCost(key,lvl){const u=upgrades[key];return u?Math.floor(u.base*Math.pow(u.scale,Math.max(0,lvl-1))):999999;}
+function updateShop(){const p=localPlayer();if(!p)return;UI.shop.style.display=snap.state==='shop'?'flex':'none';if(snap.state!=='shop')return;const left=Math.max(0,Math.ceil((snap.shopEndsAt-Date.now())/1000));UI.shopText.innerHTML=`Level <b>${snap.level}</b> complete/shop phase. <b>${p.coins}</b> coins. Next level auto-starts in <b>${left}s</b>.`;const list=['sword','chest','helmet','boots','pickaxe'];if(p.classKey==='mage')list.push('fireball','iceball','toxicball');UI.upgradeList.innerHTML='';for(const key of list){const lvl=p.upgrades[key]||1,cost=upgradeCost(key,lvl);const row=document.createElement('div');row.className='upgrade';row.innerHTML=`<div><b>${upgrades[key]?.label||key}</b><br><small>Level ${lvl} → ${lvl+1}</small></div><div style="color:var(--gold);font-weight:900">${cost} coins</div><button ${p.coins<cost?'disabled':''}>Upgrade</button>`;row.querySelector('button').onclick=()=>socket.emit('buyUpgrade',key);UI.upgradeList.appendChild(row);}}
+function updateHUD(){const p=localPlayer();if(!p){UI.hud.innerHTML='<span class="pill">Connecting…</span>';return;}const hpPct=Math.max(0,Math.round(p.hp/p.maxHp*100));const shop=snap.state==='shop'?`<span class="pill"><b>SHOP</b> ${Math.max(0,Math.ceil((snap.shopEndsAt-Date.now())/1000))}s</span>`:'';const special=p.specialCd>0?`${p.specialCd.toFixed(1)}s`:'Ready';UI.hud.innerHTML=`<span class="pill"><b>Lv</b> ${snap.level}</span><span class="pill"><b>${p.emoji||''} ${p.className}</b></span><span class="pill"><b>HP</b> ${hpPct}%</span><span class="pill"><b>Coins</b> ${p.coins}</span><span class="pill"><b>Depth</b> ${Math.max(0,Math.round(p.y/32))}/${snap.rows}</span><span class="pill"><b>Special</b> ${special}</span><span class="pill"><b>Players</b> ${snap.players.length}</span>${shop}`;UI.downed.style.display=(!p.alive && snap.state==='playing')?'flex':'none';updateShop();}
+function updateSpellButtons(){const isMage=(localPlayer()?.classKey||selectedClass)==='mage';document.querySelector('.spellPad').style.display=isMage?'flex':'none';UI.sf.classList.toggle('active',selectedSpell==='fireball');UI.si.classList.toggle('active',selectedSpell==='iceball');UI.st.classList.toggle('active',selectedSpell==='toxicball');}
+function sendInput(){if(!joined)return;const left=keys.has('a')||keys.has('arrowleft')||touch.left;const right=keys.has('d')||keys.has('arrowright')||touch.right;const up=keys.has('w')||keys.has('arrowup')||touch.up;const down=keys.has('s')||keys.has('arrowdown')||touch.down;const attack=keys.has(' ')||touch.attack;const mine=mouse.down||keys.has('e')||touch.mine;const special=keys.has('f')||keys.has('shift')||touch.special;updateAimFromMouse();socket.emit('input',{left,right,up,down,mine,attack,special,aimX:mouse.worldX,aimY:mouse.worldY,spell:selectedSpell});}
+setInterval(sendInput,50);
+
+socket.on('hello',data=>{classes=data.classes||{};upgrades=data.upgrades||{};tileDefs=data.tileDefs||{};enemyDefs=data.enemyDefs||{};chestDefs=data.chestDefs||{};buildClassGrid();updateSpellButtons();});
+socket.on('joined',data=>{localId=data.id;joined=true;UI.title.style.display='none';toast('Joined the co-op mine.');});
+socket.on('mapInit',data=>{map=data;map.tiles=data.tiles||[];});
+socket.on('tileUpdate',data=>{if(data&&map.tiles[data.y*map.cols+data.x])map.tiles[data.y*map.cols+data.x]=data.tile;});
+socket.on('snapshot',data=>{snap=data;updateHUD();updateSpellButtons();});
+socket.on('roomNotice',data=>toast(data.text||'Notice'));socket.on('reward',d=>{if(d.coins||d.xp)effects.push({x:camera.x+W/2,y:camera.y+70,text:`+${d.coins}c +${d.xp}xp`,color:'#ffd45e',ttl:1.6,screen:true});});socket.on('damage',d=>toast(`-${d.amount} HP from ${d.from}`));socket.on('downed',d=>{UI.downedText.textContent=d.reason||'You were knocked down.';});socket.on('shopError',d=>toast(d.message||'Not enough coins.'));socket.on('shopBought',()=>updateShop());
+socket.on('swing',e=>effects.push({type:'swing',...e,ttl:.22}));socket.on('spellImpact',e=>effects.push({type:'impact',...e,ttl:.4}));socket.on('specialFx',e=>effects.push({type:'special',...e,ttl:.65}));socket.on('hitSpark',e=>effects.push({x:e.x,y:e.y,text:e.text,color:e.color||'#fff',ttl:.8}));socket.on('chestOpened',e=>toast(`${e.by||'Someone'} opened a chest!`));
+
+UI.joinBtn.onclick=()=>socket.emit('join',{name:UI.nameInput.value,classKey:selectedClass});UI.nextBtn.onclick=()=>socket.emit('startNextLevel');UI.reviveBtn.onclick=()=>socket.emit('revive');UI.reviveBtn2.onclick=()=>socket.emit('revive');
+UI.sf.onclick=()=>{selectedSpell='fireball';updateSpellButtons();};UI.si.onclick=()=>{selectedSpell='iceball';updateSpellButtons();};UI.st.onclick=()=>{selectedSpell='toxicball';updateSpellButtons();};
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(document.activeElement&&['input','textarea','select'].includes(document.activeElement.tagName.toLowerCase()))return;if(k==='q'){const arr=['fireball','iceball','toxicball'];selectedSpell=arr[(arr.indexOf(selectedSpell)+1)%arr.length];updateSpellButtons();}if(k==='1')selectedSpell='fireball';if(k==='2')selectedSpell='iceball';if(k==='3')selectedSpell='toxicball';keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();});addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>keys.clear());
+canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});canvas.addEventListener('mousedown',e=>{mouse.down=true;mouse.x=e.clientX;mouse.y=e.clientY;});addEventListener('mouseup',()=>mouse.down=false);canvas.addEventListener('touchstart',e=>{const t=e.changedTouches[0];if(t){mouse.x=t.clientX;mouse.y=t.clientY;mouse.down=true;}e.preventDefault();},{passive:false});canvas.addEventListener('touchmove',e=>{const t=e.changedTouches[0];if(t){mouse.x=t.clientX;mouse.y=t.clientY;}e.preventDefault();},{passive:false});canvas.addEventListener('touchend',()=>{mouse.down=false;},{passive:false});
+function bindTouch(id,key){const el=document.getElementById(id);const on=ev=>{touch[key]=true;el.classList.add('active');ev.preventDefault();};const off=ev=>{touch[key]=false;el.classList.remove('active');ev.preventDefault();};el.addEventListener('touchstart',on,{passive:false});el.addEventListener('touchend',off,{passive:false});el.addEventListener('touchcancel',off,{passive:false});el.addEventListener('mousedown',on);addEventListener('mouseup',off);}bindTouch('tl','left');bindTouch('tr','right');bindTouch('tu','up');bindTouch('td','down');bindTouch('tm','mine');bindTouch('ta','attack');bindTouch('tsx','special');
+
+const tileColors={empty:null,dirt:['#a45732','#d07849','#6f3425'],clay:['#c8503e','#e56a50','#8b3128'],stone:['#787d87','#a7aeb8','#4c5159'],iron:['#7a7270','#d3c8bd','#464040'],gold:['#bf7831','#ffe676','#735019'],emerald:['#267562','#60ffd2','#18463c'],ruby:['#73324f','#ff619a','#4b1e34'],bedrock:['#252b36','#4e5869','#11161e']};
+function drawTile(tx,ty,t){if(!t||t.type==='empty')return;const x=tx*map.tileSize-camera.x,y=ty*map.tileSize-camera.y,s=map.tileSize;const c=tileColors[t.type]||tileColors.dirt;ctx.fillStyle=c[0];ctx.fillRect(x,y,s,s);ctx.fillStyle=c[1];ctx.fillRect(x+2,y+2,s-4,4);ctx.fillStyle=c[2];ctx.fillRect(x+2,y+s-6,s-4,4);if(t.type==='iron'||t.type==='gold'||t.type==='emerald'||t.type==='ruby'){ctx.fillStyle=c[1];ctx.fillRect(x+9,y+11,5,5);ctx.fillRect(x+20,y+22,4,4);ctx.fillRect(x+18,y+7,3,3);}if(t.hp&&tileDefs[t.type]){const max=tileDefs[t.type].hp*(1+(snap.level-1)*.22);if(t.hp<max*.8){ctx.strokeStyle='rgba(0,0,0,.45)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x+7,y+8);ctx.lineTo(x+16,y+18);ctx.lineTo(x+12,y+28);ctx.stroke();}}}
+function drawPlayer(p){const x=p.x-camera.x,y=p.y-camera.y;ctx.save();ctx.globalAlpha=p.alive?1:.45;if(p.invuln>0){ctx.strokeStyle=p.accent;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,25+Math.sin(Date.now()/80)*3,0,Math.PI*2);ctx.stroke();}ctx.fillStyle='#161a24';ctx.fillRect(x-9,y-16,18,25);ctx.fillStyle=p.color||'#ffd45e';ctx.fillRect(x-8,y-18,16,8);ctx.fillStyle='#ffd6a3';ctx.fillRect(x-6,y-26,12,10);ctx.fillStyle='#111';ctx.fillRect(x+(p.dir>0?2:-5),y-23,3,3);ctx.fillStyle=p.accent||'#fff';ctx.fillRect(x-12,y+8,8,12);ctx.fillRect(x+4,y+8,8,12);ctx.fillStyle='#fff';ctx.font='11px system-ui';ctx.textAlign='center';ctx.fillText(`${p.emoji||''} ${p.name}`,x,y-34);ctx.fillStyle='#202838';ctx.fillRect(x-20,y-31,40,4);ctx.fillStyle=p.hp/p.maxHp>.35?'#72ff7f':'#ff5364';ctx.fillRect(x-20,y-31,40*Math.max(0,p.hp/p.maxHp),4);ctx.restore();}
+function drawEnemy(e){const def=enemyDefs[e.type]||{};const x=e.x-camera.x,y=e.y-camera.y;ctx.save();if(e.freeze>0){ctx.globalAlpha=.74;ctx.strokeStyle='#bdfaff';ctx.lineWidth=3;ctx.strokeRect(x-13,y-18,26,31);}if(e.poison>0){ctx.shadowColor='#72ff7f';ctx.shadowBlur=12;}ctx.fillStyle=def.color||'#86d084';ctx.fillRect(x-11,y-18,22,28);ctx.fillStyle='#182018';ctx.fillRect(x-7,y-26,14,9);ctx.fillStyle='#111';ctx.fillRect(x-5,y-10,4,4);ctx.fillRect(x+4,y-10,4,4);ctx.fillStyle='#2a1320';ctx.fillRect(x-8,y+1,16,3);ctx.fillStyle='#202838';ctx.fillRect(x-16,y-33,32,4);ctx.fillStyle='#ff5364';ctx.fillRect(x-16,y-33,32*Math.max(0,e.hp/e.maxHp),4);ctx.restore();}
+function drawChest(c){const x=c.x-camera.x,y=c.y-camera.y;if(c.opened){ctx.globalAlpha=.35;}const cols={wood:['#9b5b2e','#ffd08a'],iron:['#687080','#d5dde8'],gold:['#b9822c','#ffe676'],crystal:['#276f82','#72e9ff']}[c.type]||['#9b5b2e','#ffd08a'];ctx.fillStyle=cols[0];ctx.fillRect(x-13,y-10,26,19);ctx.fillStyle=cols[1];ctx.fillRect(x-13,y-11,26,5);ctx.fillRect(x-2,y-10,4,19);ctx.fillStyle='#111827';ctx.fillRect(x-4,y-2,8,6);ctx.globalAlpha=1;}
+function drawProjectile(p){const x=p.x-camera.x,y=p.y-camera.y;const col=p.spell==='iceball'?'#72e9ff':p.spell==='toxicball'?'#72ff7f':'#ff8a3d';ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
+function drawDrop(d){const x=d.x-camera.x,y=d.y-camera.y;const col=d.kind==='coins'?'#ffd45e':d.kind==='chest'?'#fff6a2':(tileColors[d.kind]?.[1]||'#fff');ctx.globalAlpha=clamp(d.ttl,0,1);ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=10;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.globalAlpha=1;}
+function drawEffects(dt){for(const e of effects){e.ttl-=dt;if(e.type==='swing'){ctx.save();ctx.translate(e.x-camera.x,e.y-camera.y);ctx.rotate(e.angle);ctx.strokeStyle=e.color||'#ffd45e';ctx.lineWidth=5;ctx.globalAlpha=clamp(e.ttl/.22,0,1);ctx.beginPath();ctx.arc(0,0,e.reach||70,-.7,.7);ctx.stroke();ctx.restore();}else if(e.type==='impact'||e.type==='special'){ctx.strokeStyle=e.color||'#fff';ctx.lineWidth=3;ctx.globalAlpha=clamp(e.ttl/.45,0,1);ctx.beginPath();ctx.arc(e.x-camera.x,e.y-camera.y,(e.radius||52)*(1-e.ttl/.65+.2),0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;}else{const x=(e.screen?e.x:e.x-camera.x),y=(e.screen?e.y:e.y-camera.y)-((1-e.ttl/.8)*24);ctx.fillStyle=e.color||'#fff';ctx.font='bold 14px system-ui';ctx.textAlign='center';ctx.globalAlpha=clamp(e.ttl,0,1);ctx.fillText(e.text,x,y);ctx.globalAlpha=1;}}effects=effects.filter(e=>e.ttl>0);}
+let last=performance.now();function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;requestAnimationFrame(loop);const p=localPlayer();if(p){camera.x=clamp(p.x-W/2,0,map.cols*map.tileSize-W);camera.y=clamp(p.y-H*.48,0,map.rows*map.tileSize-H);}else{camera.x=0;camera.y=0;}updateAimFromMouse();ctx.clearRect(0,0,W,H);ctx.fillStyle='#05070d';ctx.fillRect(0,0,W,H);const s=map.tileSize||32;const startX=Math.max(0,Math.floor(camera.x/s)-1),endX=Math.min(map.cols-1,Math.floor((camera.x+W)/s)+1);const startY=Math.max(0,Math.floor(camera.y/s)-1),endY=Math.min(map.rows-1,Math.floor((camera.y+H)/s)+1);for(let y=startY;y<=endY;y++)for(let x=startX;x<=endX;x++)drawTile(x,y,tileAt(x,y));ctx.fillStyle='rgba(255,83,100,.18)';ctx.fillRect(0,snap.pressureY-camera.y-90,W,90);ctx.strokeStyle='#ff5364';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,snap.pressureY-camera.y);ctx.lineTo(W,snap.pressureY-camera.y);ctx.stroke();ctx.fillStyle='#ff9aa5';ctx.font='bold 12px system-ui';ctx.fillText('CRUSH CEILING',12,snap.pressureY-camera.y-8);for(const d of snap.drops||[])drawDrop(d);for(const c of snap.chests||[])drawChest(c);for(const pr of snap.projectiles||[])drawProjectile(pr);for(const e of snap.enemies||[])drawEnemy(e);for(const pl of snap.players||[])drawPlayer(pl);drawEffects(dt);if(snap.state==='shop'){ctx.fillStyle='rgba(0,0,0,.35)';ctx.fillRect(0,0,W,H);}updateHUD();}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
