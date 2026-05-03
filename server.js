@@ -1,5 +1,5 @@
 /*
-  Dig & Fight: Co-op Multiplayer Server
+  Digi & Fight: Co-op Multiplayer Server
   Deploy target: Railway + GitHub
 */
 const path = require('path');
